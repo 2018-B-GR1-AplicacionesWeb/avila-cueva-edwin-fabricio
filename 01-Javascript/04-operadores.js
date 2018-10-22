@@ -89,7 +89,7 @@ const resultado = arregloNombresDos.map(valorActual=> {
 console.log(resultado);
 
 ///////////////
-const arregloNumeros = [2,3,4,5,6,7,8,9,10];
+const arregloNumeros = [2,3,67,5,6,7,8,9,10];
 
 const resultadoFilter = arregloNumeros
     .filter(
@@ -140,3 +140,13 @@ const resualtadoReduce = arregloNumeros
     );
 
 console.log(resualtadoReduce)
+
+//SORT
+const resultadoSort = arregloNumeros
+    .sort((a,b)=> a-b
+    );
+
+console.log(resultadoSort)
+
+
+const clonArregloNumeros = JSON.parse(JSON.stringify(arregloNumeros));
