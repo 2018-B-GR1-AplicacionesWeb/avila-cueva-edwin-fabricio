@@ -144,16 +144,11 @@ const promesaAppendFile = (nombreArchivo,contenidoArchivo)=>{
 
 
 console.log(promesaAppendFile);
-nuevaPromesaLectura
+promesaAppendFile('08-archivo.txt','holaaa')
     .then(  //-->esto salio bien
-        (nomnreAr,contenidoArchivo) => {
+        (contenidoArchivo) => {
             console.log('Todo Bien', contenidoArchivo);
             return promesaAppendFile(contenidoArchivo);
-        }
-    )
-    .then(
-        (contenidCompleto) => {
-            console.log('Completo', contenidCompleto);
         }
     )
     .catch(
