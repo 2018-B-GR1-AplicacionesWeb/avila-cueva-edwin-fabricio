@@ -46,13 +46,21 @@ function sumarDosNumeros(numeroUno : number, numeroDos : number) {
 
 sumarDosNumeros(2,2);
 
-const  saludar = (nombre:string, apellido?:string, ...infinito:number[]):string =>{
-    return 'hola';
+const  saludar = (nombre:string, apellido?:string, ...infinito:number[]):any =>{
+    return 3;
 };
 
-const respuesta = saludar('edwin','cueva',1,2,3,4);
+let respuesta = <string> saludar('edwin','cueva',1,2,3,4);
+respuesta = respuesta.toUpperCase();
 
-const nombreDos = 'Edwin';
-nombreDos = 2;
+//otra forma de castear
+/*let respuesta:string  =  saludar('edwin','cueva',1,2,3,4);
+respuesta = respuesta.toUpperCase();*/
+
+
+let  nombreDos = 'Edwin';
+nombreDos = 'hola'; //duck typing : Trata de interpretar lo que es el tipo de variable
+
+
 
 
