@@ -1,9 +1,7 @@
-import {tipoDeClasificacion, tiposDeJuegos} from "../Deber-JavaScript/PaqueteRecursos";
-
 declare var  require;
 const inquirer = require('inquirer');
 const fs = require ('fs');
-import {opcionesMenu} from './PaqueteRecursos';
+import {opcionesMenu,tipoDeClasificacion,tiposDeJuegos} from './PaqueteRecursos';
 declare var Promise:any;
 
 const opciones = [
@@ -78,7 +76,9 @@ const funcionBorrar =(nombreDelArchivo)=> {
     });
 };
 
+const funcionActualizar =  ()=>{
 
+}
 
 
 
