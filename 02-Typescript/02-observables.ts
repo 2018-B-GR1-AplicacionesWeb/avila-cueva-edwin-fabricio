@@ -78,7 +78,7 @@ async function ejecutarCodigoSyncrono() {
     }
 }*/
 
-ejecutarCodigoSyncrono();
+//ejecutarCodigoSyncrono();
 
 
 /*
