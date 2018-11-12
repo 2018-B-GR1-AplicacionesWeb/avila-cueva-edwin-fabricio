@@ -1,15 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-function crearJuegos(juegos, juegoNuevo) {
-    juegos.push(juegoNuevo);
+exports.crearJuegos = (arreglosJuegos, nuevoJuego) => {
+    arreglosJuegos.push(nuevoJuego);
     return new Promise((resolve, reject) => {
-        resolve({
-            juegos
-        });
+        resolve(arreglosJuegos);
         reject({
-            mensaje: 'NO SE CREO USUARIO'
+            mensaje: 'NO SE CREO JUEGO'
         });
     });
-}
-exports.crearJuegos = crearJuegos;
-;
+};

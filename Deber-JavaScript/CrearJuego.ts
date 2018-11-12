@@ -1,13 +1,13 @@
 declare var Promise: any;
-export function crearJuegos(juegos:any,juegoNuevo:any) {
-    juegos.push(juegoNuevo);
+export const crearJuegos = (arreglosJuegos,nuevoJuego)=>{
+    arreglosJuegos.push(nuevoJuego);
     return new Promise(
         (resolve, reject) => {
-            resolve({
-                juegos
-            });
+            resolve(
+                arreglosJuegos
+            );
             reject({
-                mensaje: 'NO SE CREO USUARIO'
+                mensaje: 'NO SE CREO JUEGO'
             });
         }
     )
