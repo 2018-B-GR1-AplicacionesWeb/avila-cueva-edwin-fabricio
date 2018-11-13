@@ -20,7 +20,15 @@ let respuestaObservable;
     .prompt(preguntas)
      .then(
     function (respuetas) {
-        const observableRespuesta$ = rxjs.of(respuetas);
+        respuestaObservable = respuetas;
+    });
+
+
+ const funcionHola=(respuestaObservable)=>{
+
+}
+
+/*const observableRespuesta$ = rxjs.of(respuetas);
         observableRespuesta$
             .pipe(
                 map(
@@ -44,12 +52,7 @@ let respuestaObservable;
                     console.log(error)
                 }
 
-            );
-    });
-
-
-
-
+            );*/
 
 /*const observableRespuesta$ = rxjs.of(respuetas);
 observableRespuesta$
