@@ -32,6 +32,8 @@ inquirer
             });
         });
     }
+    if (respuestas.opciones === 'Buscar') {
+    }
     if (respuestas.opciones === 'Actualizar') {
         fs.readFile('Juegos2.json', 'utf-8', (error, contenidoArchivo) => {
             if (error) {

@@ -38,6 +38,11 @@ inquirer
                 })
         }
 
+        if (respuestas.opciones === 'Buscar'){
+
+        }
+
+
         if(respuestas.opciones === 'Actualizar'){
             fs.readFile('Juegos2.json','utf-8',
                 (error,contenidoArchivo)=>{
@@ -48,9 +53,6 @@ inquirer
 
                         const arregloet= JSON.parse("[" + contenidoArchivo + "]");
                         console.log(arregloet)
-
-
-
                       /*  fs.writeFile('Juegos1.txt',
                             function (error) {
                                 if (error) {
