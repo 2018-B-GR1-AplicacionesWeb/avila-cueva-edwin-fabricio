@@ -1,5 +1,5 @@
 export const opcionesMenu = [
-    'Crear','Borrar','Actualizar','Buscar',
+    'Crear','Borrar','Actualizar','Buscar','Añadir',
 ];
 
 export const tiposDeJuegos = [

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.opcionesMenu = [
-    'Crear', 'Borrar', 'Actualizar', 'Buscar',
+    'Crear', 'Borrar', 'Actualizar', 'Buscar', 'Añadir',
 ];
 exports.tiposDeJuegos = [
     'Lucha', 'Arcade', 'Simulación', 'Plataformas', 'Shooter', 'En primera persona (FPS)',
