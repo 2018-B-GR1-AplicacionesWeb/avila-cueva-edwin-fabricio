@@ -66,6 +66,22 @@ const preguntaEdicionUsuario = [
         message: 'Cual es el nuevo nombre? '
     },
 ];
+
+const preguntaJuegos = [
+    {
+        type: 'input',
+        name: 'id',
+        message: '¿id Juego? '
+    },
+    {
+        type: 'input',
+        name: 'nombre',
+        message: '¿Nombre del Juego? '
+    },
+    {
+
+    }
+];
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////INICIO DEL PROGRAMA///////////////////////////////////////////////////////
