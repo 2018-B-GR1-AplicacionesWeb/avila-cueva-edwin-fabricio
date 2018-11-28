@@ -72,7 +72,7 @@ async function ejecutarCodigoSyncrono() {
 
 //métodos de las clases
 
-/*class Usuario{
+/*class DeTipoUsuario{
     async  llamar(){
         await promesita();
     }

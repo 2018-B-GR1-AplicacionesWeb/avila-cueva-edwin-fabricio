@@ -19,8 +19,8 @@ inquirer
     .then((respuestas) => {
         if (respuestas.opciones === 'Crear') {
             const preguntasFormulario = [
-                {type: 'input', name: 'nombreDelJuego', message: 'Ingrese nombre del Juego:'},
-                {type: 'input', name: 'precioDelJuego', message: 'Ingrese el precio del Juego:'}]
+                {type: 'input', name: 'nombreDelJuego', message: 'Ingrese nombre del DeTipoJuego:'},
+                {type: 'input', name: 'precioDelJuego', message: 'Ingrese el precio del DeTipoJuego:'}]
             inquirer
                 .prompt(preguntasFormulario)
                 .then((respuestasFormulario) => {
@@ -48,8 +48,8 @@ inquirer
                         var arregloet = JSON.parse("[" + contenidoArchivo + "]");
                         console.log(arregloet)
                         const preguntasFormulario = [
-                            {type: 'input', name: 'nombreDelJuego', message: 'Ingrese nombre del Juego:'},
-                            {type: 'input', name: 'precioDelJuego', message: 'Ingrese el precio del Juego:'}]
+                            {type: 'input', name: 'nombreDelJuego', message: 'Ingrese nombre del DeTipoJuego:'},
+                            {type: 'input', name: 'precioDelJuego', message: 'Ingrese el precio del DeTipoJuego:'}]
                         inquirer
                             .prompt(preguntasFormulario)
                             .then((respuestasFormulario) => {
@@ -82,7 +82,7 @@ inquirer
                     }else {
                         const arregloet= JSON.parse("[" + contenidoArchivo + "]");
                         const preguntasBuscar = [
-                            {type: 'input', name: 'nombreDelJuego', message: 'Que Juego quiere buscar:'},]
+                            {type: 'input', name: 'nombreDelJuego', message: 'Que DeTipoJuego quiere buscar:'},]
                         inquirer
                             .prompt(preguntasBuscar)
                             .then((respuestasBuscar) => {

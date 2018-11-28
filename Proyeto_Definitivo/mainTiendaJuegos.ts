@@ -39,7 +39,7 @@ async function main() {
             case 'Crear':
                 console.log('Pedir Datos');
                 const respuestaPreguntasAlUsuario = await inquirer.prompt(preguntasAlUsuario);
-                console.log('respuestas al Usuario',respuestaPreguntasAlUsuario);
+                console.log('respuestas al DeTipoUsuario',respuestaPreguntasAlUsuario);
                 const respuestaAñadirUsuario = await añadirDatosALaBase(respuestaPreguntasAlUsuario);
                 main();
                 break;
@@ -195,6 +195,98 @@ function borrarUsuario(nombreUsuarioAEliminar){
     );
 
 }
+
+
+
+
+const preguntaUsuarioBusquedaPorNombre = [
+    {
+        type: 'input',
+        name: 'nombre',
+        message: 'Escribe el nombre del usuario a buscar'
+    }
+];
+
+
+const preguntaUsuarioNuevoNombre = [
+    {
+        type: 'input',
+        name: 'nombre',
+        message: 'Escribe tu nuevo nombre'
+    }
+];
+
+
+
+
+
+
+
+function editarUsuario(nombre, nuevoNombre) {
+    return new Promise(
+        (resolve, reject) => {
+            fs.readFile('bdd.json', 'utf-8',
+                (err, contenido) => {
+                    if (err) {
+                        reject({mensaje: 'Error leyendo'});
+                    } else {
+                        const bdd = JSON.parse(contenido);
+
+
+                        const indiceUsuario = bdd.usuarios
+                            .findIndex(
+                                (usuario) => {
+                                    return usuario.nombre = nombre;
+                                }
+                            );
+
+                        bdd.usuarios[indiceUsuario].nombre = nuevoNombre;
+
+
+                        fs.writeFile(
+                            'bdd.json',
+                            JSON.stringify(bdd),
+                            (err) => {
+                                if (err) {
+                                    reject(err);
+                                } else {
+                                    resolve({mensaje: 'DeTipoUsuario Editado'});
+                                }
+                            }
+                        );
+                    }
+                });
+        }
+    );
+}
+
+function buscarUsuarioPorNombre(nombre) {
+    return new Promise(
+        (resolve, reject) => {
+            fs.readFile('bdd.json', 'utf-8',
+                (err, contenido) => {
+                    if (err) {
+                        reject({mensaje: 'Error leyendo'});
+                    } else {
+                        const bdd = JSON.parse(contenido);
+
+                        const respuestaFind = bdd.usuarios
+                            .find(
+                                (usuario) => {
+                                    return usuario.nombre === nombre;
+                                }
+                            );
+
+                        resolve(respuestaFind);
+                    }
+                });
+        }
+    );
+}
+
+
+
+
 
 function actualizarUsuario(){
 
