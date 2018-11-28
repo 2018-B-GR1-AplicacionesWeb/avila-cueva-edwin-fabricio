@@ -236,6 +236,7 @@ function ejecutarAcccion() {
                     respuestaBDD.bdd.usuarios[indice].nombre = respuestaBDD.usuario.nombre;
                     return respuestaBDD;
                 case 'Buscar':
+                    console.log(respuestaBDD.bdd)
                     console.log('Usuario Encontrado: ',respuestaBDD.usuario);
                     return respuestaBDD;
                 case 'Borrar':
@@ -355,9 +356,11 @@ function eliminarPorNombre(respuestaBDD: RespuestaBDD) {
         .pipe(
             mergeMap(
                 (respuesta: EliminarPorNombre)=>{
-                    const indiceDelNombre = respuestaBDD.bdd.usuarios.indexOf(respuesta.nombre);
+                    const indiceDelNombre = respuestaBDD.bdd.usuarios.findIndex((usuario)=>{
+                        return usuario.nombre === respuesta.nombre;
+                    });
+                    console.log(indiceDelNombre)
                     const resultadoSplice = respuestaBDD.bdd.usuarios.splice(indiceDelNombre,1);
-                    respuestaBDD.bdd.usuarios = resultadoSplice;
                     return rxjs.of(respuestaBDD);
                 }
             )
