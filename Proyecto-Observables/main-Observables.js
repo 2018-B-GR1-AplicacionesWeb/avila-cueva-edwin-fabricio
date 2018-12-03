@@ -57,6 +57,19 @@ var preguntaEdicionUsuario = [
         message: 'Cual es el nuevo nombre? '
     },
 ];
+var preguntaJuegos = [
+    {
+        type: 'input',
+        name: 'id',
+        message: '¿id Juego? '
+    },
+    {
+        type: 'input',
+        name: 'nombre',
+        message: '¿Nombre del Juego? '
+    },
+    {}
+];
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////INICIO DEL PROGRAMA///////////////////////////////////////////////////////
 ////////////////////////// INCIALIZACION BASE
@@ -242,7 +255,6 @@ function eliminarPorNombre(respuestaBDD) {
         });
         console.log(indiceDelNombre);
         var resultadoSplice = respuestaBDD.bdd.usuarios.splice(indiceDelNombre, 1);
-        console.log(respuestaBDD);
         return rxjs.of(respuestaBDD);
     }));
 }

@@ -332,13 +332,13 @@ function preguntarIdUsuario(respuestaBDD: RespuestaBDD) {
                         return rxjs
                             .from(inquirer.prompt(preguntaEdicionUsuario))
                             .pipe(
-                                map(
+                                map(///trnandgormale al bovservablse , recibe un JASON
                                     (nombre:{nombre:string})=>{
                                         respuestaBDD.usuario ={
                                             id:null,
                                             nombre:nombre.nombre
                                         };
-                                        return respuestaBDD;
+                                        return respuestaBDD; // retorna cualquier cosa
                                     }
                                 )
                             );
