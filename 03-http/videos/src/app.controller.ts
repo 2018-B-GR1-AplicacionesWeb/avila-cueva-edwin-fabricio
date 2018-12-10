@@ -68,10 +68,34 @@ export class AppController {
     }
 
     @Post('adiosMundoPost')
-    adiosMundoPost():string{
-      return 'adios MUNDO post';
+    adiosMundoPost(
+        @Res() response,
+    ){
+        response.render('inicio',
+            {
+                usuario: 'Edwin',
+                arreglo:[
+                    {
+                        titulo:'Noticia 1',
+                        descripcion:'Acción',
+                    },
+                    {
+                        titulo:'Noticia 2',
+                        descripcion:'Acción',
+                    },
+                    {
+                        titulo:'Noticia 3',
+                        descripcion:'Acción',
+                    },
+                    {
+                        titulo:'Noticia NUEVA',
+                        descripcion:'Acción',
+                    },
+                ],
+                booleano: true,
+            }
+        );
     }
-
 
     //parametros de cuerpo
     @Post('crearUsuario')
@@ -143,6 +167,35 @@ export class AppController {
             throw new InternalServerErrorException({mensaje: 'Error Sevidor'})
         }
     }
+
+    @Get('inicio')
+    inicio(
+        @Res() response,
+    ){
+        response.render('inicio',
+            {
+            usuario: 'Edwin',
+            arreglo:[
+                {
+                    titulo:'Noticia 1',
+                    descripcion:'Acción',
+                },
+                {
+                    titulo:'Noticia 2',
+                    descripcion:'Acción',
+                },
+                {
+                    titulo:'Noticia 3',
+                    descripcion:'Acción',
+                },
+            ],
+            booleano: false,
+            }
+        );
+    }
+
+
+
 
 }
 

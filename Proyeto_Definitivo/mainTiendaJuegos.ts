@@ -78,14 +78,14 @@ function inicilizarBase(){
                                     )
                                 }else{
                                     resolve(
-                                        {mensaje:'ok'}
+                                        {mensaje:'OK'}
                                     );
                                 }
                             }
                         );
                     }else {
                         resolve(
-                            {mensaje:'ok'}
+                            {mensaje:'OK'}
                         );
                     }
                 }

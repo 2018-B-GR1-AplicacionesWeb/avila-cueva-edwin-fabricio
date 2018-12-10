@@ -1,0 +1,23 @@
+<h1><%=usuario%></h1>
+<% var avila = 'avila'; %>
+<h2><%= avila %></h2>
+
+<%if (booleano){%>
+<p>USTED CREO UNA NOTICIA</p>
+<%}%>
+<ul>
+<% arreglo.forEach((noticia)=>{%>
+    <li>
+        <%= noticia.titulo%>
+        -
+        <%noticia.descripcion%>
+        <form action="/adiosMundoPost" method="POST" >
+            <button type="button">Clickea sin problemas</button>
+            <button >yo tambien envio culquier cosa INFORMACION</button>
+            <button type="submit">Enviar</button>
+        </form>
+    </li>
+<%})%>
+    </ul>
+
+<p> PARRAFO </p>
