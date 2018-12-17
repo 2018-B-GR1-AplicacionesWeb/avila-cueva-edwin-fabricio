@@ -1,55 +1,73 @@
 import {
+    Headers,
     Get,
     Controller,
     HttpCode,
     InternalServerErrorException,
     Post,
     Query,
+    Param,
     Body,
-    Headers,
-    UnauthorizedException, Req, Res
+    Head, UnauthorizedException, Req, Res
 } from '@nestjs/common';
-import { AppService } from './app.service';
+import {AppService} from './app.service';
 import {Observable, of} from "rxjs";
-import {Request} from "express";
-import {Response} from "express";
-import {options} from "tsconfig-paths/lib/options";
+import {Request, Response} from "express";
+import {NoticiaService} from "./noticia.service";
 
-@Controller()//decoradores
-
-//controller('usuario')
-//http://localhost:3000/usuario
-
+@Controller()  //decoradores
+// Controller('usuario')
+// http://localhost:3000/usuario
 export class AppController {
-    constructor(private readonly appService: AppService) {
+
+
+    // public servicio:AppService;
+    constructor(private readonly _appService: AppService,
+                private readonly _noticiaService: NoticiaService) {  // NO ES UN CONSTRUCTOR
+        // this.servicio = servicio;
     }
 
-    @Get()//http://ip:puerto
-    //@Get('Crear')
-    //http://localhost:3000/usuario/crear?nombre=Adrian
 
-    //esto es una método
-    @Get('holaMundoNombre')//cuando me hagan un request con el metodo GET vot a ejecutar esta función
-          //acepta como parametro, la URL dque va a visitar el usuario
-          //http://ip:puerto/url
-   // @HttpCode(204)//status
-    //por defecto el status es 200
-
+    @Get() // http://ip:puerto
+    // @Get('crear')
+    // http://localhost:3000/usuario/crear?nombre=Adrian
+    @HttpCode(204) // status
     raiz(
-        @Query() todosQueryParams:any,
-        @Query('nombre') nombre:string,
+        @Query() todosQueryParams: any,  //{nombre:"Adrian"}
+        @Query('nombre') nombre: string, // adrian
     ): string {
         console.log(todosQueryParams);
-        return 'hola mundo'+nombre;
+        return 'Hola Mundo' + nombre;
     }
 
+    @Get('segmentoUno/segmentoDos/:idUsuario')  // PARAMETRO RUTA
+    // http://localhost:3000/usuario/segmentoUno/segmentoDos/10
+    parametroRuta(
+        @Param('idUsuario') id
+    ) {
+        return id;
+    }
 
+    @Get('adiosMundo') // url
+    adiosMundo(): string {
+        return 'Adios mundo'
+    }
 
+    @Post('adiosMundo') // url
+    adiosMundoPOST(
+        @Res() response,
+    ) {
+        response.render(
+            'inicio',
+            {
+                usuario: 'Adrian',
+                arreglo: [],
+                booleano: true,
+            }
+        );
+    }
 
-
-
-
-    @Get('adiosMundoPromesa')//cambiar la URL
+    @Get('adiosMundoPromesa') // url
     adiosMundoPromesa(): Promise<string> {
         const promesaAdios = (): Promise<string> => {
             return new Promise(
@@ -61,93 +79,10 @@ export class AppController {
         return promesaAdios();
     }
 
-    @Get('adiosMundoObservable')
-    adiosMundoObservable():Observable<string>{
-      const respesta$ = of('Adios Mundo Observable');
-      return respesta$;
-    }
 
-    @Post('adiosMundoPost')
-    adiosMundoPost(
-        @Res() response,
-    ){
-        response.render('inicio',
-            {
-                usuario: 'Edwin',
-                arreglo:[
-                    {
-                        titulo:'Noticia 1',
-                        descripcion:'Acción',
-                    },
-                    {
-                        titulo:'Noticia 2',
-                        descripcion:'Acción',
-                    },
-                    {
-                        titulo:'Noticia 3',
-                        descripcion:'Acción',
-                    },
-                    {
-                        titulo:'Noticia NUEVA',
-                        descripcion:'Acción',
-                    },
-                ],
-                booleano: true,
-            }
-        );
-    }
-
-    //parametros de cuerpo
-    @Post('crearUsuario')
-    @HttpCode(200)/*el codigo que se ejecuta solo cuando todo esta bien */
-    crearUsuario(
-        @Body()usuario:Usuario,
-        @Body('nombre')nombre:String,
-        @Headers()cabeceras,//cabeceras de peticion
-        @Headers('seguridad')codigo,//cebecera de seguridad
-
-        //vamos a mandar en la respuesta más cabeceras
-        @Res()res:Response,
-
-        //para las cookies
-        @Res() req: Request,
-    ){
-        //imprimir la cookie
-        console.log('COOKIES',req.cookies);//leído-->leyendo una cabecera de peticion
-        console.log('cokies segura',req.signedCookies);
-
-
-        //crear usuario
-        console.log(usuario);
-        console.log('cabeceras de perticion',cabeceras)
-        if(codigo==='1234'){
-
-            const bdd = this.appService.crearUsuario(usuario);//añadismosel usuario a la base
-
-            res.append('TOKEN','5678');//debemos de usar los métodos del res..express
-            res.cookie("app","web");//cookie insegura--
-            res.cookie("segura","secreto", {
-                signed:true,
-            });
-            res.json(bdd);
-        }else {
-            throw new UnauthorizedException({
-                mensaje:'Error de autorización',
-                error:401
-            })
-        }
-
-    }
-
-
-
-
-
-
-    //adios mundo async
-    @Get('adiosMundoPromesaAsync')//cambiar la URL
-    @HttpCode(201) //-->si sale bientodo ejecuta esto
-    async adiosMundoPromesaAsync(): Promise<string> {
+    @Get('adiosMundoAsync') // url
+    @HttpCode(201)
+    async adiosMundoAsync() {
         const promesaAdios = (): Promise<string> => {
             return new Promise(
                 (resolve, reject) => {
@@ -159,47 +94,170 @@ export class AppController {
             const respuesta: string = await promesaAdios();
             return respuesta;
         } catch (e) {
-            //acpeta como parametro un JSON
-            //no mandar e
-            //el desarrollador vee la consola
-            console.log(e);
-            //el usuario ve error servidor
-            throw new InternalServerErrorException({mensaje: 'Error Sevidor'})
+            console.error(e);
+            throw new InternalServerErrorException({mensaje: 'Error servidor'})
         }
+
     }
+
+    @Get('adiosMundoObservable') // url
+    adiosMundoObservable(): Observable<string> {
+        const respuesta$ = of('Adios Mundo');
+        return respuesta$;
+    }
+
+    @Post('crearUsuario')
+    @HttpCode(200)  // Codigo OK
+    crearUsuario(
+        @Body() usuario: Usuario,
+        @Body('nombre') nombre: string,
+        @Headers() cabeceras, // Cabeceras de peticion,
+        @Headers('seguridad') codigo, // Cabeceras de peticion
+        @Res() res: Response,
+        @Req() req: Request | any,
+    ) {
+        // crear usuario
+        console.log('Cookies', req.cookies);  // LEIDO
+        console.log('Cookies', req.secret);
+        console.log('Cookies Seguras', req.signedCookies);  // LEIDO
+        console.log(usuario);
+        console.log(cabeceras);
+
+        if (codigo === '1234') {
+
+            const bdd = this._appService.crearUsuario(usuario);
+
+            res.append('token', '5678'); // AQUI
+            res.cookie("app", "web"); // INSEGURA
+            res.cookie("segura", "secreto", {
+                signed: true
+            });
+
+            res.json(bdd);
+
+        } else {
+            throw new UnauthorizedException({  // MALO
+                mensaje: 'Error de autorizacion',
+                error: 401
+            })
+        }
+
+
+    }
+
 
     @Get('inicio')
     inicio(
         @Res() response,
-    ){
-        response.render('inicio',
+        @Query('accion')accion: string,
+        @Query('titulo')titulo:string,
+    ) {
+        let mensaje = undefined;
+        if(accion && titulo){
+            switch (accion) {
+                case 'borrar':
+                    mensaje = `Registro ${titulo} eliminado`
+                case 'crear':
+                    mensaje = `Registro ${titulo} creado`
+                case 'actualizar':
+                    mensaje = `Registro ${titulo} actualizado`
+            }
+        }
+        response.render(
+            'inicio',
             {
-            usuario: 'Edwin',
-            arreglo:[
-                {
-                    titulo:'Noticia 1',
-                    descripcion:'Acción',
-                },
-                {
-                    titulo:'Noticia 2',
-                    descripcion:'Acción',
-                },
-                {
-                    titulo:'Noticia 3',
-                    descripcion:'Acción',
-                },
-            ],
-            booleano: false,
+                usuario: 'Adrian',
+                arreglo: this._noticiaService.arreglo, // AQUI!
+                booleano: false,
+                mensaje: mensaje,
             }
         );
     }
 
+    @Post('eliminar/:idNoticia')
+    eliminar(
+        @Res() response,
+        @Param('idNoticia') idNoticia: string,
+    ) {
+        const noticiaBorrada = this._noticiaService.eliminar(Number(idNoticia));
+        const parametrosConsulta = `?accion=borrar&titulo=${
+            noticiaBorrada.titulo
+            }`
+        response.redirect('/inicio'+parametrosConsulta)
+    }
+
+    @Get('crear-noticia')
+    crearNoticiaRuta(
+        @Res() response
+    ) {
+        response.render(
+            'crear-noticia'
+        )
+    }
+
+    @Post('crear-noticia')
+    crearNoticiaFuncion(
+        @Res() response,
+        @Body() noticia: Noticia
+    ) {
+        const noticiaCreada = this._noticiaService.crear(noticia);
+        const parametrosConsulta = `?accion=crear&titulo=${
+            noticiaCreada.titulo
+            }`
+        response.redirect(
+            '/inicio'+parametrosConsulta
+        )
+    }
+
+    @Get('actualizar-noticia/:idNoticia')
+    actualizarNoticiaVista(
+        @Res() response,
+        @Param('idNoticia') idNoticia: string,
+    ) {
+        // El "+" le transforma en numero a un string
+        // numerico
+        const noticiaEncontrada = this._noticiaService
+            .buscarPorId(+idNoticia);
+
+        response
+            .render(
+                'crear-noticia',
+                {
+                    noticia: noticiaEncontrada
+                }
+            )
 
 
+    }
+
+    @Post('actualizar-noticia/:idNoticia')
+    actualizarNoticiaMetedo(
+        @Res() response,
+        @Param('idNoticia') idNoticia: string,
+        @Body() noticia: Noticia
+    ) {
+        noticia.id = +idNoticia;
+        const noticiaActualizada = this._noticiaService.actualizar(+idNoticia, noticia);
+
+        const parametrosConsulta = `?accion=actualizar&titulo=${
+            noticiaActualizada.titulo
+            }`
+        response.redirect('/inicio'+parametrosConsulta);
+
+    }
 
 }
+
 
 export interface Usuario {
-
-    nombre:String;
+    nombre: string;
 }
+
+export interface Noticia {
+    id?: number;
+    titulo: string;
+    descripcion: string;
+}
+
+
+// http://localhost:3000
