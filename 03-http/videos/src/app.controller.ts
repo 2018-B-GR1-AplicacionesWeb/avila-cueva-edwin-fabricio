@@ -157,10 +157,13 @@ export class AppController {
             switch (accion) {
                 case 'borrar':
                     mensaje = `Registro ${titulo} eliminado`
+                    break;
                 case 'crear':
                     mensaje = `Registro ${titulo} creado`
+                    break;
                 case 'actualizar':
                     mensaje = `Registro ${titulo} actualizado`
+                    break;
             }
         }
         response.render(
