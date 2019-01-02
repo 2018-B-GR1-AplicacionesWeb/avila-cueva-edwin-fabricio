@@ -1,0 +1,59 @@
+<% const existeMensaje = typeof mensaje !== "undefined"%>
+<style>
+    table, th,td{
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+
+
+<%if(mensaje){%>
+ <p>Mensaje: <%=mensaje%></p>
+<%}%>
+
+<h1><%= usuario%></h1>
+<%var apellido = 'avila';%>
+<h2><%= apellido%></h2>
+<p>parrafo</p>
+
+<ul>
+
+</ul>
+
+
+<a href="/crear-noticia">
+    <button>CREAR NOTICIA</button>
+</a>
+
+<form action="/busqueda" method="POST">
+    <label for="busqueda">BUSQUEDA</label>
+    <input id="busqueda" type="text">
+    <button>BUSCAR</button>
+</form>
+
+<table>
+    <!--    tr table row filas-->
+    <!--    th table header columnas-->
+    <tr>
+        <th> IDENTIFICADOR </th>
+        <th> NOMBRE </th>
+        <th> ACCIONES</th>
+    </tr>
+
+
+    <% arreglo.forEach( (noticia)=>{%>
+    <tr>
+       <td><%= noticia.titulo%></td>
+        <td><%= noticia.descripcion%></td>
+        <td>
+            <form action="/eliminar/<%=noticia.id%>" method="POST">
+                <button type="submit">ELIMINAR</button>
+            </form>
+            <a href="/actualizar-noticia/<%=noticia.id%>">
+                <button>ACTUALIZAR</button>
+            </a>
+        </td>
+    </tr>
+    <%})%>
+
+</table>

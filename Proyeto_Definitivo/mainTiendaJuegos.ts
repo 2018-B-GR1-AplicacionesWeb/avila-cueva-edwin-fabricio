@@ -94,6 +94,7 @@ function inicilizarBase(){
     );
 };
 
+
 function añadirDatosALaBase(usuarioIngresarEnLaBase){
     return new Promise(
         (resolve,reject)=>{
