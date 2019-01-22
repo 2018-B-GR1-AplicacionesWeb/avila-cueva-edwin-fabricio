@@ -8,12 +8,13 @@ import {
     Query,
     Param,
     Body,
-    Head, UnauthorizedException, Req, Res
+    Head, UnauthorizedException, Req, Res, Session
 } from '@nestjs/common';
 import {AppService} from './app.service';
 import {Observable, of} from "rxjs";
 import {Request, Response} from "express";
 import {NoticiaService} from "./noticia/noticia.service";
+import {UsuarioService} from "./noticia/usuario/usuario.service";
 
 @Controller()  //decoradores
 // Controller('usuario')
@@ -23,7 +24,8 @@ export class AppController {
 
     // public servicio:AppService;
     constructor(private readonly _appService: AppService,
-                private readonly _noticiaService: NoticiaService) {  // NO ES UN CONSTRUCTOR
+                private readonly _noticiaService: NoticiaService,
+                private readonly _usuarioService: UsuarioService) {  // NO ES UN CONSTRUCTOR
         // this.servicio = servicio;
     }
 
@@ -177,77 +179,118 @@ export class AppController {
         );
     }
 
-    @Post('eliminar/:idNoticia')
-    eliminar(
-        @Res() response,
-        @Param('idNoticia') idNoticia: string,
+
+    @Get('login')
+    mostrarLogin(
+        @Res() res
     ) {
-        const noticiaBorrada = this._noticiaService.eliminar(Number(idNoticia));
-        const parametrosConsulta = `?accion=borrar&titulo=${
-            noticiaBorrada.titulo
-            }`
-        response.redirect('/inicio'+parametrosConsulta)
+       res.render('login');
     }
 
-    @Get('crear-noticia')
-    crearNoticiaRuta(
-        @Res() response
-    ) {
-        response.render(
-            'crear-noticia'
-        )
+    @Post('login')
+    @HttpCode(200)
+    async ejecutarLogin(
+        @Body('username') username:string,
+        @Body('password') password:string,
+        @Res() res,
+        @Session()session
+    ){
+        const respuesta = await this._usuarioService.auntenticar(username, password);
+        console.log(session)
+        if (respuesta){
+            session.usuario = username;
+            res.send('ok');
+        } else {
+            res.redirect('logout');
+        }
     }
 
-    @Post('crear-noticia')
-    crearNoticiaFuncion(
-        @Res() response,
-        @Body() noticia: Noticia
+    @Get('logout')
+    logout(
+        @Res() res,
+        @Session() session
     ) {
-        const noticiaCreada = this._noticiaService.crear(noticia);
-        const parametrosConsulta = `?accion=crear&titulo=${
-            noticiaCreada.titulo
-            }`
-        response.redirect(
-            '/inicio'+parametrosConsulta
-        )
+        session.username = undefined;
+        session.destroy();
+        res.redirect('login');
     }
 
-    @Get('actualizar-noticia/:idNoticia')
-    actualizarNoticiaVista(
-        @Res() response,
-        @Param('idNoticia') idNoticia: string,
-    ) {
-        // El "+" le transforma en numero a un string
-        // numerico
-        const noticiaEncontrada = this._noticiaService
-            .buscarPorId(+idNoticia);
 
-        response
-            .render(
-                'crear-noticia',
-                {
-                    noticia: noticiaEncontrada
-                }
+
+
+
+    /*
+        @Post('eliminar/:idNoticia')
+        eliminar(
+            @Res() response,
+            @Param('idNoticia') idNoticia: string,
+        ) {
+            const noticiaBorrada = this._noticiaService.eliminar(Number(idNoticia));
+            const parametrosConsulta = `?accion=borrar&titulo=${
+                noticiaBorrada.titulo
+                }`
+            response.redirect('/inicio'+parametrosConsulta)
+        }
+
+        @Get('crear-noticia')
+        crearNoticiaRuta(
+            @Res() response
+        ) {
+            response.render(
+                'crear-noticia'
             )
+        }
+
+            @Post('crear-noticia')
+            crearNoticiaFuncion(
+                @Res() response,
+                @Body() noticia: Noticia
+            ) {
+                const noticiaCreada = this._noticiaService.crear(noticia);
+                const parametrosConsulta = `?accion=crear&titulo=${
+                    noticiaCreada.titulo
+                    }`
+                response.redirect(
+                    '/inicio'+parametrosConsulta
+                )
+            }
+
+            @Get('actualizar-noticia/:idNoticia')
+            actualizarNoticiaVista(
+                @Res() response,
+                @Param('idNoticia') idNoticia: string,
+            ) {
+                // El "+" le transforma en numero a un string
+                // numerico
+                const noticiaEncontrada = this._noticiaService
+                    .buscarPorId(+idNoticia);
+
+                response
+                    .render(
+                        'crear-noticia',
+                        {
+                            noticia: noticiaEncontrada
+                        }
+                    )
 
 
-    }
+            }
 
-    @Post('actualizar-noticia/:idNoticia')
-    actualizarNoticiaMetedo(
-        @Res() response,
-        @Param('idNoticia') idNoticia: string,
-        @Body() noticia: Noticia
-    ) {
-        noticia.id = +idNoticia;
-        const noticiaActualizada = this._noticiaService.actualizar(+idNoticia, noticia);
+            @Post('actualizar-noticia/:idNoticia')
+            actualizarNoticiaMetedo(
+                @Res() response,
+                @Param('idNoticia') idNoticia: string,
+                @Body() noticia: Noticia
+            ) {
+                noticia.id = +idNoticia;
+                const noticiaActualizada = this._noticiaService.actualizar(+idNoticia, noticia);
 
-        const parametrosConsulta = `?accion=actualizar&titulo=${
-            noticiaActualizada.titulo
-            }`
-        response.redirect('/inicio'+parametrosConsulta);
+                const parametrosConsulta = `?accion=actualizar&titulo=${
+                    noticiaActualizada.titulo
+                    }`
+                response.redirect('/inicio'+parametrosConsulta);
 
-    }
+            }*/
 
 }
 
