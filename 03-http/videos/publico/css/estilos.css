@@ -1,0 +1,87 @@
+/*
+
+ Las consultas son: QUERY SELECTORS
+
+    BUSQUEDA {
+        PROPIEDAD: VALOR-PROPIEDAD;
+        PROPIEDAD: VALOR-PROPIEDAD;
+        PROPIEDAD: VALOR-PROPIEDAD;
+        PROPIEDAD: VALOR-PROPIEDAD;
+        PROPIEDAD: VALOR-PROPIEDAD;
+    }
+    ETIQUETAS {
+    }
+    CLASSES {
+    }
+    ID {
+    }
+
+    ORDEN DE IMPORTANCIA
+    ID> BUSQUEDAS COMPLEJAS>CLASE>ETIQUETA
+    ULTIMO EN LA PARTE DE ESTILOS
+
+
+----------        BUSQUEDAS COMPLEJAS
+    todos los parrafos que tengan la clase amarillo
+    p.amarillo{
+    color:pink
+   }
+
+---------------si queremos acceder a dos clases
+    p.amarillo.azul{
+    color:black
+   }
+
+-----------------pintar los parrafos que estan antes de un H1, pero solo uno
+    ETIQUTA_ANTES + ETIQUETA_DEPUES{
+    }
+    h1 + p{
+        background-color: greenyellow;
+    }
+--------------parrafo que tenga clase amarillo y antes tenga la etiqueta H1 que tenga la clase amarillo tenga orange
+
+    h1.amarillo + p.amarillo{
+        background-color: orange;
+    }
+------------------
+
+    ETIQUETA_PAPA > ETIQUETA HIJO> ETIQUETA NIETO{
+    }
+    solo se pintan los que estandentro de los tres, si no esta dentro del ul no se pinta DENTRO DEL SPAN
+    ul >li >span{
+        background-color: purple;
+    }
+
+    */
+
+p {
+    background-color: aliceblue;
+}
+.rojo {
+    background-color: red;
+}
+.amarillo {
+    background-color: yellow;
+}
+.azul{
+    background-color: blue;
+}
+#titulo {
+    background-color: green;
+}
+p.amarillo{
+    background-color:pink;
+}
+p.amarillo.azul{
+    color:white;
+    background-color: black;
+}
+h1 + p{
+    background-color: greenyellow;
+}
+h1.amarillo + p.amarillo{
+    background-color: orange;
+}
+ul >li >span{
+    background-color: purple;
+}

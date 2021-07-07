@@ -1,0 +1,24 @@
+<%const estaCreando = typeof noticia === "undefined"%>
+<h1><%= estaCreando ? 'CREAR NOTICIA':' ACTUALIZAR NOTICIA' %> ES TITULO DE LA PAGINA</h1>
+
+<form action="/<%=estaCreando?'crear':'actualizar'%>-noticia/<%=estaCreando?'':noticia.id%>" method="POST">
+
+    <div>
+        <label for="titulo">TITULO</label>
+        <input id="titulo" name="titulo" type="text" value="<%= estaCreando ? '':noticia.titulo%>">
+    </div>
+
+
+    <label for="descripcion">DESCRIPCION</label>
+
+    <div>
+    <textarea id="descripcion" name="descripcion" cols="30" rows="4">
+        <%= estaCreando ? '':noticia.descripcion%>
+    </textarea>
+    </div>
+
+    <button><%= estaCreando ? 'CREAR NOTICIA':' ACTUALIZAR NOTICIA' %></button>
+
+</form>
+
+<a href="/inicio"><button>REGRESAR INICIO</button></a>
